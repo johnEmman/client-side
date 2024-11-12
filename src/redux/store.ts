@@ -1,13 +1,20 @@
-// src/app/store.ts
+// src/store.ts
 import { configureStore } from "@reduxjs/toolkit";
-import webrtcReducer from "../features/webrtcSlice";
+import usersReducer from "../features/usersSlice";
+import signalingReducer from "../features/signalingSlice";
+import mediaReducer from "../features/mediaSlice";
 
+// Create the Redux store
 export const store = configureStore({
   reducer: {
-    webrtc: webrtcReducer, // Add webrtcReducer to the store
+    users: usersReducer,
+    signaling: signalingReducer,
+    media: mediaReducer,
   },
 });
 
-// Export types for use in components
+// RootState is the type of the Redux store's state
 export type RootState = ReturnType<typeof store.getState>;
+
+// AppDispatch is the type for dispatching actions in Redux
 export type AppDispatch = typeof store.dispatch;

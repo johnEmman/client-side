@@ -17,13 +17,6 @@ const Header: React.FC = () => {
     <header className="flex items-center justify-between border-b px-6 py-4">
       <h1 className="text-2xl font-bold">Meeting Rooms</h1>
       <div>
-        <input
-          type="text"
-          value={newRoomId}
-          onChange={(e) => setNewRoomId(e.target.value)}
-          placeholder="Enter Room ID"
-          className="mr-2"
-        />
         <button
           className="flex items-center px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
           onClick={handleCreateRoom}

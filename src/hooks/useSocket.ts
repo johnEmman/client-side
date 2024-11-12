@@ -1,33 +1,58 @@
 // src/hooks/useSocket.ts
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { io } from "socket.io-client";
-import { addUser, removeUser } from "../features/webrtcSlice";
+import { useDispatch } from "react-redux";
+import {
+  connect,
+  disconnect,
+  addUser,
+  removeUser,
+  setSignalingData,
+} from "../features/connectionSlice";
 
-const useSocket = () => {
+const SERVER_URL = "https://192.168.1.20:443";
+const socket = io(SERVER_URL, { secure: true });
+
+export const useSocket = () => {
   const dispatch = useDispatch();
-  const socket = io("https://192.168.212.126:443"); // Replace with your server URL
 
   useEffect(() => {
-    console.log(1);
-    // Listen for "user-joined" event
-    socket.on("user-joined", (user: { id: string; name: string }) => {
-      dispatch(addUser(user)); // Add user to Redux when they join
+    socket.on("connect", () => {
+      console.log("Connected to WebSocket server");
+      dispatch(connect());
     });
 
-    // Listen for "user-left" event
-    socket.on("user-left", (userId: string) => {
-      dispatch(removeUser(userId)); // Remove user from Redux when they leave
+    socket.on("disconnect", () => {
+      console.log("Disconnected from WebSocket server");
+      dispatch(disconnect());
     });
 
-    // Cleanup on unmount to prevent memory leaks
+    socket.on("user-connected", (userId: string) => {
+      console.log("User connected:", userId);
+      dispatch(addUser(userId));
+    });
+
+    socket.on("user-disconnected", (userId: string) => {
+      console.log("User disconnected:", userId);
+      dispatch(removeUser(userId));
+    });
+
+    // Signaling events
+    socket.on("offer", (data) => dispatch(setSignalingData(data)));
+    socket.on("answer", (data) => dispatch(setSignalingData(data)));
+    socket.on("ice-candidate", (data) => dispatch(setSignalingData(data)));
+
     return () => {
-      socket.off("user-joined");
-      socket.off("user-left");
+      socket.off("connect");
+      socket.off("disconnect");
+      socket.off("user-connected");
+      socket.off("user-disconnected");
+      socket.off("offer");
+      socket.off("answer");
+      socket.off("ice-candidate");
+      socket.disconnect();
     };
-  }, [dispatch, socket]);
+  }, [dispatch]);
 
   return socket;
 };
-
-export default useSocket;
