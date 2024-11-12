@@ -2,6 +2,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface UsersState {
+  [x: string]: any;
   users: string[];
 }
 
@@ -13,6 +14,9 @@ const usersSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
+    setCurrentUserId(state, action: PayloadAction<string>) {
+      state.currentUserId = action.payload;
+    },
     setUsers: (state, action: PayloadAction<string[]>) => {
       state.users = action.payload;
     },
@@ -27,6 +31,7 @@ const usersSlice = createSlice({
   },
 });
 
-export const { setUsers, addUser, removeUser } = usersSlice.actions;
+export const { setUsers, addUser, setCurrentUserId, removeUser } =
+  usersSlice.actions;
 
 export default usersSlice.reducer;

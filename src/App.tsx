@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NotFound from "./pages/NotFound";
 import Auth from "./pages/Auth";
-import MeetingRoom from "./pages/MeetingRoom";
+import MockCall from "./pages/MockCall";
 
 function App() {
   return (
@@ -9,7 +9,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/auth" element={<Auth />} />
-          <Route path="/meetingroom" element={<MeetingRoom />} />
+          <Route path="/mockcall" element={<MockCall />} />
           <Route path="*" element={<NotFound />} />{" "}
           {/* Fallback for unmatched routes */}
         </Routes>

@@ -3,6 +3,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import usersReducer from "../features/usersSlice";
 import signalingReducer from "../features/signalingSlice";
 import mediaReducer from "../features/mediaSlice";
+import messagesReducer from "../features/messagesSlice";
 
 // Create the Redux store
 export const store = configureStore({
@@ -10,6 +11,7 @@ export const store = configureStore({
     users: usersReducer,
     signaling: signalingReducer,
     media: mediaReducer,
+    messages: messagesReducer,
   },
 });
 

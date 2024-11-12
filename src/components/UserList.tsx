@@ -38,7 +38,7 @@ const UserList: React.FC = () => {
       <div>
         <div className="max-h-[150px] overflow-y-auto">
           {filteredUsers.length > 0 ? (
-            <ul>
+            <ul className="px-2">
               {filteredUsers.map((user) => (
                 <li key={user} className="px-2 py-1 hover:bg-gray-200">
                   <div className="flex items-center justify-between">

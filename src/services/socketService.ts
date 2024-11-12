@@ -4,17 +4,12 @@ import { setUsers, addUser, removeUser } from "../features/usersSlice";
 import {
   setIncomingCall,
   acceptCall,
-  rejectCall,
   setCallData,
   resetSignalingState,
 } from "../features/signalingSlice";
-import {
-  setLocalStream,
-  setRemoteStream,
-  setPeerConnection,
-  resetMediaState,
-} from "../features/mediaSlice";
+import { resetMediaState } from "../features/mediaSlice";
 import { store } from "../redux/store";
+import { addMessage } from "../features/messagesSlice";
 
 const SERVER_URL = "https://192.168.1.20:443"; // Replace with your backend URL
 let socket: Socket;
@@ -53,7 +48,13 @@ export const connectSocket = () => {
     store.dispatch(setCallData(signal));
     store.dispatch(acceptCall());
   });
-
+  socket.on(
+    "receive-message",
+    (messageData: { senderId: string; message: string }) => {
+      // Add the received message to the Redux store
+      store.dispatch(addMessage(messageData));
+    }
+  );
   socket.on("newICECandidate", (candidate: RTCIceCandidateInit) => {
     const peerConnection = store.getState().media.peerConnection;
     if (peerConnection) {
@@ -71,7 +72,6 @@ export const disconnectSocket = () => {
     store.dispatch(resetMediaState());
   }
 };
-
 export const sendOffer = (
   offer: RTCSessionDescriptionInit,
   targetId: string
@@ -93,3 +93,12 @@ export const sendICECandidate = (
   socket.emit("sendCandidate", targetId, candidate);
 };
 //
+
+// Send a message to a target user
+export const sendMessage = (
+  messageData: { senderId: string; message: string },
+  targetId: string
+) => {
+  console.log("Sending message:", messageData, "to", targetId);
+  socket.emit("sendMessage", messageData, targetId); // Emit the message to the server
+};
