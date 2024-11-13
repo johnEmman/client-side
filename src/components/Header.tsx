@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setRoomId } from "../features/roomSlice";
-import { createRoom } from "../services/socketService";
 import { useNavigate } from "react-router-dom"; // Import useNavigate for routing
 
 const Header: React.FC = () => {
@@ -16,10 +15,10 @@ const Header: React.FC = () => {
     setRoomIdState(generatedRoomId); // Update the local state with the new room ID
 
     // Dispatch the room ID to Redux
-    dispatch(setRoomId(generatedRoomId));
+    // dispatch(setRoomId(generatedRoomId));
 
-    // Emit the room creation event to the server
-    createRoom(generatedRoomId); // Make sure this is emitting correctly
+    // // Emit the room creation event to the server
+    // createRoom(generatedRoomId); // Make sure this is emitting correctly
 
     // Optional: Redirect to the newly created room page
     navigate(`/mockcall/room/${generatedRoomId}`); // Navigate to the room page

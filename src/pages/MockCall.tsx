@@ -4,7 +4,6 @@ import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import RoomInfo from "../components/RoomInfo";
 import UserList from "../components/UserList";
-import MessagingComponent from "../components/MessagingComponent";
 import { Outlet } from "react-router-dom";
 
 const MeetingRoom: React.FC = () => {
@@ -14,7 +13,7 @@ const MeetingRoom: React.FC = () => {
         <Header />
         <div className="flex flex-1 overflow-hidden">
           <main className="flex-1 overflow-y-auto p-6">
-            <RoomInfo />
+            <Outlet />
           </main>
           <Sidebar />
         </div>
