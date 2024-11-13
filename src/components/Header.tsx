@@ -1,16 +1,29 @@
 // src/components/Header.tsx
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-// import { setRoomId } from "../features/webrtcSlice";
+import { setRoomId } from "../features/roomSlice";
+import { createRoom } from "../services/socketService";
+import { useNavigate } from "react-router-dom"; // Import useNavigate for routing
 
 const Header: React.FC = () => {
-  const [newRoomId, setNewRoomId] = useState("");
+  const [roomId, setRoomIdState] = useState<string>("");
   const dispatch = useDispatch();
+  const navigate = useNavigate(); // Initialize useNavigate hook
 
   const handleCreateRoom = () => {
-    // if (newRoomId.trim()) {
-    //   dispatch(setRoomId(newRoomId)); // Set the roomId in Redux
-    // }
+    // Generate a random room ID (you can customize this part)
+    const generatedRoomId = Math.random().toString(36).substring(2, 8); // Generates a short random ID
+    setRoomIdState(generatedRoomId); // Update the local state with the new room ID
+
+    // Dispatch the room ID to Redux
+    dispatch(setRoomId(generatedRoomId));
+
+    // Emit the room creation event to the server
+    createRoom(generatedRoomId); // Make sure this is emitting correctly
+
+    // Optional: Redirect to the newly created room page
+    navigate(`/mockcall/room/${generatedRoomId}`); // Navigate to the room page
+    console.log("Room Created with ID:", generatedRoomId);
   };
 
   return (

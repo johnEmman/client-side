@@ -5,6 +5,7 @@ import Sidebar from "../components/Sidebar";
 import RoomInfo from "../components/RoomInfo";
 import UserList from "../components/UserList";
 import MessagingComponent from "../components/MessagingComponent";
+import { Outlet } from "react-router-dom";
 
 const MeetingRoom: React.FC = () => {
   return (

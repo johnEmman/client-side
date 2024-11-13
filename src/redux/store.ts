@@ -4,6 +4,7 @@ import usersReducer from "../features/usersSlice";
 import signalingReducer from "../features/signalingSlice";
 import mediaReducer from "../features/mediaSlice";
 import messagesReducer from "../features/messagesSlice";
+import roomReducer from "../features/roomSlice";
 
 // Create the Redux store
 export const store = configureStore({
@@ -12,6 +13,7 @@ export const store = configureStore({
     signaling: signalingReducer,
     media: mediaReducer,
     messages: messagesReducer,
+    room: roomReducer,
   },
 });
 
