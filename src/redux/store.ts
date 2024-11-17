@@ -1,13 +1,10 @@
 // src/store.ts
 import { configureStore } from "@reduxjs/toolkit";
-import usersReducer from "../features/usersSlice";
-import roomReducer from "../features/roomSlice";
-
+import socketReducer from "../features/socketSlice";
 // Create the Redux store
 export const store = configureStore({
   reducer: {
-    users: usersReducer,
-    room: roomReducer,
+    socket: socketReducer,
   },
 });
 

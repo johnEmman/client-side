@@ -1,7 +1,7 @@
 // src/components/Header.tsx
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setRoomId } from "../features/roomSlice";
+// import { setRoomId } from "../features/roomSlice";
 import { useNavigate } from "react-router-dom"; // Import useNavigate for routing
 
 const Header: React.FC = () => {
